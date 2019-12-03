@@ -21,14 +21,14 @@ paddle = {
   "height": 20,
   "x": 300,
   "y": 580,
-  "velocity": 10
+  "velocity": 50
 }
 
 ball = {
   "radius": 15,
   "y": 30,
   "x": randint(0, display["width"]),
-  "velocity": 20
+  "velocity": 40
 }
 
 # creating a window, and launching our game

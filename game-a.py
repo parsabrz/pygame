@@ -25,7 +25,7 @@ paddle = {
 }
 
 ball = {
-  "radius": 15,
+  "width": 15,
   "y": 30,
   "x": randint(0, display["width"]),
   "velocity": 20
@@ -51,13 +51,13 @@ while True:
       paddle["x"] = display["width"] - paddle["width"]
   pygame.draw.rect(win, (255, 0, 0), (paddle["x"], paddle["y"], paddle["width"], paddle["height"]))
   ball["y"] += ball["velocity"]
-  pygame.draw.circle(win, (0, 0, 255), (ball["x"], ball["y"]), ball["radius"])
-  if ball["y"] + ball["radius"] >= paddle["y"]:
+  pygame.draw.rect(win, (0, 0, 255), (ball["x"], ball["y"], ball["width"], ball["width"]))
+  if ball["y"] + ball["width"] >= paddle["y"]:
     if ball["x"] > paddle["x"] and ball["x"] < paddle["x"] + paddle["width"]:
       score += 1
     total += 1
     ball["y"] = 30
-    ball["x"] = randint(0, display["width"] - ball["radius"])
+    ball["x"] = randint(0, display["width"] - ball["width"])
 
   textsurface = myfont.render("score: {0}/{1}".format(score, total), False, (0, 0, 0))
   win.blit(textsurface, (10, 10))

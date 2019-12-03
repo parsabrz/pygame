@@ -49,6 +49,18 @@ while True:
     paddle["x"] += paddle["velocity"]
     if paddle["x"] + paddle["width"] > display["width"] :
       paddle["x"] = display["width"] - paddle["width"]
+
+  if keys[pygame.K_UP]:
+    paddle["y"] -= paddle["velocity"]
+    if paddle["y"] < display["height"]//2 :
+      paddle["y"] = display["height"]//2
+
+  if keys[pygame.K_DOWN]:
+    paddle["y"] += paddle["velocity"]
+    if paddle["y"] + paddle["height"] > display["height"] :
+      paddle["y"] = display["height"] - paddle["height"]
+
+
   pygame.draw.rect(win, (255, 0, 0), (paddle["x"], paddle["y"], paddle["width"], paddle["height"]))
   ball["y"] += ball["velocity"]
   pygame.draw.circle(win, (0, 0, 255), (ball["x"], ball["y"]), ball["radius"])

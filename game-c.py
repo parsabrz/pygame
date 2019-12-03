@@ -1,6 +1,21 @@
 import pygame
 from random import randint
 
+def RepresentsInt(s):
+  try:
+    int(s)
+    return True
+  except ValueError:
+    return False
+
+ballNumbers = 0
+while ballNumbers < 1 or ballNumbers > 10:
+  inputValue = input("Enter a number of balls between 1 to 10 inclusive: ")
+  if RepresentsInt(inputValue):
+    ballNumbers = int(inputValue)
+  else:
+    ballNumber = 0
+
 pygame.init()
 
 # initializing variables to account for the number of balls caught, and total dropped
@@ -23,13 +38,16 @@ paddle = {
   "y": 580,
   "velocity": 10
 }
-
-ball = {
-  "radius": 15,
-  "y": 30,
-  "x": randint(0, display["width"]),
-  "velocity": 20
-}
+  
+ballList = []
+for x in range(ballNumbers):
+  singleBall = {
+    "radius": 15,
+    "y": 30,
+    "x": randint(0, display["width"]),
+    "velocity": 20
+  }
+  ballList.append(singleBall)
 
 # creating a window, and launching our game
 win = pygame.display.set_mode((display["width"], display["height"])) # 800 width, 600 height
@@ -50,14 +68,17 @@ while True:
     if paddle["x"] + paddle["width"] > display["width"] :
       paddle["x"] = display["width"] - paddle["width"]
   pygame.draw.rect(win, (255, 0, 0), (paddle["x"], paddle["y"], paddle["width"], paddle["height"]))
-  ball["y"] += ball["velocity"]
-  pygame.draw.circle(win, (0, 0, 255), (ball["x"], ball["y"]), ball["radius"])
-  if ball["y"] + ball["radius"] >= paddle["y"]:
-    if ball["x"] > paddle["x"] and ball["x"] < paddle["x"] + paddle["width"]:
-      score += 1
-    total += 1
-    ball["y"] = 30
-    ball["x"] = randint(0, display["width"] - ball["radius"])
+
+  for ball in ballList:
+    ball["y"] += ball["velocity"]
+    pygame.draw.circle(win, (0, 0, 255), (ball["x"], ball["y"]), ball["radius"])
+
+    if ball["y"] + ball["radius"] >= paddle["y"]:
+      if ball["x"] > paddle["x"] and ball["x"] < paddle["x"] + paddle["width"]:
+        score += 1
+      total += 1
+      ball["y"] = 30
+      ball["x"] = randint(0, display["width"] - ball["radius"])
 
   textsurface = myfont.render("score: {0}/{1}".format(score, total), False, (0, 0, 0))
   win.blit(textsurface, (10, 10))
